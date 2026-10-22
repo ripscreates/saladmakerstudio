@@ -12,7 +12,8 @@
 - Switch between manual creation and a demo that assembles your chosen recipe with pause, resume, and replay.
 - Choose from lemon–olive oil, balsamic vinaigrette, tahini, yogurt, green goddess, miso ginger-carrot, or no dressing.
 - Adjust servings and ingredient portions. The ticket updates amounts for the entire recipe.
-- Finish for a recipe receipt with measured dressing ingredients and simple preparation steps. Print it, save it as PDF, or download an illustrated PNG card.
+- See an estimated kcal/g for every ingredient, plus approximate calories for each portion, the whole recipe, each serving, the selected dressing, and the finished bowl's overall kcal/g.
+- Finish for a recipe receipt with measured dressing ingredients, calorie estimates, and simple preparation steps. Print it, save it as PDF, or download an illustrated PNG card.
 - Save recipes in this browser and reload them later. Share a recipe with a link that carries the recipe data directly.
 
 ## Run it yourself
@@ -35,7 +36,11 @@ The Share button puts a versioned, size-limited recipe in the URL fragment (the 
 
 ## How it is made
 
-The bowl and its original ingredient illustrations are drawn at runtime on an HTML Canvas using small geometric pixel-art shapes. Ingredients have deterministic positions, can be moved independently, and rotate with the isometric bowl. The app has no runtime JavaScript dependencies or external asset requests. `core.js` handles recipe validation, share links, measured quantities, and preparation steps; `app.js` connects those recipes to the controls and browser storage.
+The bowl and its original ingredient illustrations are drawn at runtime on an HTML Canvas using small geometric pixel-art shapes. Ingredients have deterministic positions, can be moved independently, and rotate with the isometric bowl. The app has no runtime JavaScript dependencies or external asset requests. `core.js` handles recipe validation, share links, measured quantities, calorie estimates, and preparation steps; `app.js` connects those recipes to the controls and browser storage.
+
+## Calorie estimates
+
+The app bundles generic food kcal-per-100-g estimates informed by [USDA FoodData Central SR Legacy](https://fdc.nal.usda.gov/download-datasets/). It uses typical edible weights for count-based boiled eggs and simple kitchen-weight assumptions for dressings. The calculator scales the values with the selected portions and servings, then includes the chosen dressing in the recipe total and overall kcal/g. Values are rounded and can differ from a real bowl because ingredients, brands, edible yield, and preparation vary. They are for casual recipe planning, not a nutrition label. The app makes no nutrition API requests.
 
 Run the lightweight recipe-format checks with Node.js 18 or newer:
 
@@ -51,4 +56,4 @@ node recipe-checks.cjs
 
 ## Recipe note
 
-Ingredient quantities are flexible starting points, not nutritional estimates. Protein amounts refer to ready-to-eat portions. Prepare raw proteins appropriately. Check product labels and dressings for allergens.
+Ingredient quantities are flexible starting points. Protein amounts refer to ready-to-eat portions. Prepare raw proteins appropriately. Calorie values are estimates rather than a nutrition label. Check product labels and dressings for allergens.
