@@ -1,0 +1,19 @@
+'use strict';
+window.SaladCore = (() => {
+  const finite=(v,fallback)=>typeof v==='number'&&Number.isFinite(v)?v:fallback;
+  function validate(raw){
+    if(!raw||typeof raw!=='object'||raw.version!==1||!Array.isArray(raw.items)||raw.items.length>SALAD.ingredients.length)throw new Error('This recipe format is not supported.');
+    const known=new Set(SALAD.ingredients.map(i=>i.id)),seen=new Set();
+    const items=raw.items.map(i=>{if(!i||!known.has(i.id)||seen.has(i.id))throw new Error('This recipe includes an unknown or repeated ingredient.');seen.add(i.id);return {id:i.id,factor:Math.round(Math.max(.25,Math.min(8,finite(i.factor,1)))*4)/4};});
+    if(!SALAD.dressings.some(d=>d.id===raw.dressing))throw new Error('This recipe has an unknown dressing.');
+    const positions={};if(raw.positions&&typeof raw.positions==='object'){for(const [key,val] of Object.entries(raw.positions).slice(0,180)){const [id,index]=key.split(':');const ing=SALAD.ingredients.find(i=>i.id===id);if(!ing||!seen.has(id)||!/^\d+$/.test(index)||Number(index)>=ing.pieces||!Array.isArray(val)||val.length!==2||!val.every(v=>typeof v==='number'&&Number.isFinite(v)))continue;positions[key]=SaladArt.clamp(...val).map(v=>Math.round(v*1000)/1000);}}
+    return {version:1,name:typeof raw.name==='string'?raw.name.slice(0,60):'My very wow bowl',items,dressing:raw.dressing,servings:Math.round(Math.max(1,Math.min(12,finite(raw.servings,1)))),positions,angle:finite(raw.angle,0)%(Math.PI*2),preset:SALAD.presets.some(p=>p.id===raw.preset)?raw.preset:null};
+  }
+  function fromPreset(p,servings=1){return {version:1,name:p.name,items:p.items.map(id=>({id,factor:1})),dressing:p.dressing,servings,positions:{},angle:0,preset:p.id};}
+  function encode(state){const text=JSON.stringify(validate(state));const bytes=new TextEncoder().encode(text);let binary='';bytes.forEach(b=>binary+=String.fromCharCode(b));return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+  function decode(text){if(!text||text.length>24000||!/^[A-Za-z0-9_-]+$/.test(text))throw new Error('This recipe link is invalid or too long.');const binary=atob(text.replace(/-/g,'+').replace(/_/g,'/'));const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));return validate(JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes)));}
+  function number(n){return Number(n.toFixed(2)).toString();}
+  function quantity(item,servings){const ing=SALAD.ingredients.find(i=>i.id===item.id);const amount=ing.amount*item.factor*servings;return `${number(amount)} ${ing.unit==='egg'?(amount===1?'egg':'eggs'):ing.unit}`;}
+  function preparation(state){const steps=['Wash and prepare the produce. Use the ingredient cuts shown on your ticket.'];if(state.items.some(i=>SALAD.ingredients.find(d=>d.id===i.id).group==='Protein'))steps.push('Prepare your selected proteins so they are ready to eat. Cook any raw proteins appropriately, then slice or flake as needed. Amounts on this ticket are ready-to-eat portions.');steps.push('Add the lettuce if using, then arrange the vegetables, fruit, crunch and proteins in your bowl.');const dressing=SALAD.dressings.find(d=>d.id===state.dressing);if(dressing.id!=='none')steps.push(dressing.steps+' Drizzle over the salad just before serving.');steps.push(`Toss gently, taste and adjust. Divide into ${state.servings} ${state.servings===1?'serving':'servings'} and enjoy the crunch.`);return steps;}
+  return {validate,fromPreset,encode,decode,number,quantity,preparation};
+})();

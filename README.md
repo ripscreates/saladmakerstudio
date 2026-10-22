@@ -47,7 +47,7 @@ node recipe-checks.cjs
 
 - **Visual inspiration:** [Colorfigures by April Zhu](https://april-zhu.com/colorfigures), especially its tangible, hand-inked interactive-object presentation. The salad interface, code, and Canvas illustrations here were made for this project; the Colorfigures source code, generated figures, and assets are not bundled or reused.
 - **Technical references:** Colorfigures credits [ISO-GLOW by April Zhu](https://isoglow.dev/) and the underlying [iso-figure project by Tolga Cohce](https://github.com/MrBongoC/ai-iso-skill). These links document the reference project's technical lineage; Salad Maker Studio 3000 does not depend on either project.
-- **Pixelify Sans**, designed by Stefie Justprince, is bundled for the pixel-style wordmark and display text under the SIL Open Font License 1.1. See [FONT-LICENSE.txt](FONT-LICENSE.txt) and the [Pixelify Sans source](https://github.com/eifetx/Pixelify-Sans).
+- **Pixelify Sans**, designed by Stefie Justprince, is bundled for the pixel-style wordmark and display text under the SIL Open Font License 1.1. See [`FONT-LICENSE.txt`](FONT-LICENSE.txt) and the [Pixelify Sans source](https://github.com/eifetx/Pixelify-Sans).
 
 ## Recipe note
 
