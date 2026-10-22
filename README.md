@@ -4,6 +4,27 @@
 
 **Try the live app:** [salad-maker-studio-3000.ripleyjene.chatgpt.site](https://salad-maker-studio-3000.ripleyjene.chatgpt.site/)
 
+## App screenshots
+
+<table>
+  <tr>
+    <th>Build and arrange a bowl</th>
+    <th>See the calorie estimate</th>
+  </tr>
+  <tr>
+    <td><a href="screenshots/01-salad-builder.png"><img src="screenshots/01-salad-builder.png" alt="The ingredient picker, pixel-art bowl, and editable recipe ticket." width="460"></a></td>
+    <td><a href="screenshots/02-calorie-estimates.png"><img src="screenshots/02-calorie-estimates.png" alt="Estimated calories per recipe and serving, dressing calories, and whole-bowl kcal per gram." width="460"></a></td>
+  </tr>
+  <tr>
+    <th>Review your recipe ticket</th>
+    <th>Follow the steps and take it with you</th>
+  </tr>
+  <tr>
+    <td><a href="screenshots/03-recipe-receipt.png"><img src="screenshots/03-recipe-receipt.png" alt="A finished recipe ticket with the bowl illustration, ingredient amounts, dressing, and calorie summary." width="460"></a></td>
+    <td><a href="screenshots/04-recipe-calories-and-actions.png"><img src="screenshots/04-recipe-calories-and-actions.png" alt="The recipe receipt shows calorie estimates, preparation steps, and save, print, download, and share buttons." width="460"></a></td>
+  </tr>
+</table>
+
 ## What you can do
 
 - Start with one of five editable bowls: Garden Party, Berry Good, Tokyo Crunch, Coastal Club, or Power Bowl. Ask the kitchen to surprise you, or empty the bowl and create your own.
